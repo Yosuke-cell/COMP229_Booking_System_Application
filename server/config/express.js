@@ -5,6 +5,7 @@ var cors = require("cors");
 
 //Import routers
 var BookingRouter = require("../app/router/booking");
+var UserRouter = require("../app/router/user");
 
 //config express
 const app = express();
@@ -15,7 +16,7 @@ app.use(express.urlencoded({ extended: false }));
 
 // Routers
 app.use("/api/bookings", BookingRouter);
-
+app.use("/api/users", UserRouter);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));

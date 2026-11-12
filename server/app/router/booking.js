@@ -2,14 +2,16 @@ var express = require("express");
 var router = express.Router();
 
 var BookingController = require("../controller/booking");
+var authController = require("../controller/auth");
 
-router.get("/", BookingController.getList);
-router.get("/:id", BookingController.getByID);
+// All booking routes require a valid token
+router.get("/", authController.logtoken, authController.validateToken, BookingController.getList);
+router.get("/:id", authController.validateToken, BookingController.getByID);
 
-router.post("/", BookingController.createBooking);
+router.post("/", authController.validateToken, BookingController.createBooking);
 
-router.put("/:id", BookingController.updateBooking);
+router.put("/:id", authController.validateToken, BookingController.updateBooking);
 
-router.delete("/:id", BookingController.deleteBooking);
+router.delete("/:id", authController.validateToken, BookingController.deleteBooking);
 
 module.exports = router;

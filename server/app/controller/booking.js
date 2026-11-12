@@ -42,6 +42,7 @@ module.exports.getByID = async function (req, res, next) {
 //create booking
 module.exports.createBooking = async function (req, res, next) {
   try {
+    req.body.user = req.auth.id;
     let newBooking = BookingModel(req.body);
 
     let result = await BookingModel.create(newBooking);
@@ -62,6 +63,22 @@ module.exports.updateBooking = async function (req, res, next) {
   try {
     let BookingId = req.params.id;
 
+    // find the booking first, so we can check who owns it
+    let booking = await BookingModel.findById(BookingId);
+    if (!booking) {
+      return res.status(404).json({
+        success: false,
+        message: "Booking not found.",
+      });
+    }
+    if (booking.user.toString() !== req.auth.id && !req.auth.admin) {
+      return res.status(403).json({
+        success: false,
+        message: "You are not allowed to edit this booking.",
+      });
+    }
+    delete req.body.user;
+
     let result = await BookingModel.findByIdAndUpdate(
       BookingId,
       { ...req.body, updated: Date.now() },
@@ -69,12 +86,6 @@ module.exports.updateBooking = async function (req, res, next) {
     );
     console.log(result);
 
-    if (!result) {
-      return res.status(404).json({
-        success: false,
-        message: "Booking not found.",
-      });
-    }
     res.json({
       success: true,
       message: "Bookings updated successfully.",
@@ -90,19 +101,29 @@ module.exports.updateBooking = async function (req, res, next) {
 module.exports.deleteBooking = async function (req, res, next) {
   try {
     let bookingId = req.params.id;
+
+    // find the booking first, so we can check who owns it
+    let booking = await BookingModel.findById(bookingId);
+    if (!booking) {
+      return res.status(404).json({
+        success: false,
+        message: "Booking not found.",
+      });
+    }
+    if (booking.user.toString() !== req.auth.id && !req.auth.admin) {
+      return res.status(403).json({
+        success: false,
+        message: "You are not allowed to cancel this booking.",
+      });
+    }
+
+    // only cancel AFTER the checks pass
     let result = await BookingModel.findByIdAndUpdate(
       bookingId,
       { status: "cancelled", updated: Date.now() },
       { new: true },
     );
     console.log(result);
-
-    if (!result) {
-      return res.status(404).json({
-        success: false,
-        message: "Booking not found.",
-      });
-    }
 
     res.json({
       success: true,
