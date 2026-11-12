@@ -4,7 +4,7 @@ var logger = require("morgan");
 var cors = require("cors");
 
 //Import routers
-
+var BookingRouter = require("../app/router/booking");
 
 //config express
 const app = express();
@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // Routers
-
+app.use("/api/bookings", BookingRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
