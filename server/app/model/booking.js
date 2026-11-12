@@ -7,9 +7,9 @@ let BookingModel = mongoose.Schema(
       required: "Title is required.",
     },
     description: String,
-    resource: {
+    catName: {
       type: String,
-      required: "Source is required.",
+      required: "Cat name is required.",
     },
     startDate: {
       type: Date,

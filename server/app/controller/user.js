@@ -1,8 +1,20 @@
 let UsersModel = require("../model/user");
 
-//get all of users
+// Returns true if the logged-in user is the owner of this account or an admin
+function canAccess(req, userId) {
+  return req.auth.id === userId || req.auth.admin;
+}
+
+//get all of users (admin only)
 module.exports.getList = async function (req, res, next) {
   try {
+    if (!req.auth.admin) {
+      return res.status(403).json({
+        success: false,
+        message: "Admins only.",
+      });
+    }
+
     let list = await UsersModel.find({});
 
     res.json({
@@ -16,21 +28,29 @@ module.exports.getList = async function (req, res, next) {
   }
 };
 
-//get user by ID
+//get user by ID (owner or admin)
 module.exports.getByID = async function (req, res, next) {
   try {
     let userId = req.params.id;
+
+    if (!canAccess(req, userId)) {
+      return res.status(403).json({
+        success: false,
+        message: "You are not allowed to access this user.",
+      });
+    }
+
     let user = await UsersModel.findById(userId);
 
-    if(!user){
-        return res.status(404).json({
-            success: false,
-            message: "User not found"
-        })
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
     }
     res.json({
       success: true,
-      message: "Users retrieved successfully.",
+      message: "User retrieved successfully.",
       data: user,
     });
   } catch (error) {
@@ -39,9 +59,10 @@ module.exports.getByID = async function (req, res, next) {
   }
 };
 
-//create new users
+//create new users (sign up - public)
 module.exports.createUser = async function (req, res, next) {
   try {
+    // nobody can make themselves admin when signing up
     delete req.body.admin;
     let newUser = UsersModel(req.body);
 
@@ -58,17 +79,24 @@ module.exports.createUser = async function (req, res, next) {
   }
 };
 
-//update users
+//update users (owner or admin)
 module.exports.updateUser = async function (req, res, next) {
   try {
     let userId = req.params.id;
 
-    let user = await UsersModel.findById({ _id: userId });
-    if(!user){
-        return res.status(404).json({
-            success: false,
-            message: "User not found"
-        })
+    if (!canAccess(req, userId)) {
+      return res.status(403).json({
+        success: false,
+        message: "You are not allowed to edit this user.",
+      });
+    }
+
+    let user = await UsersModel.findById(userId);
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
     }
 
     if (req.body.firstName) user.firstName = req.body.firstName;
@@ -80,8 +108,8 @@ module.exports.updateUser = async function (req, res, next) {
     let result = await user.save();
     res.json({
       success: true,
-      message: "Users updated successfully.",
-      data: result
+      message: "User updated successfully.",
+      data: result,
     });
   } catch (error) {
     console.log(error);
@@ -89,23 +117,31 @@ module.exports.updateUser = async function (req, res, next) {
   }
 };
 
-//delete users
+//delete users (owner or admin)
 module.exports.deleteUser = async function (req, res, next) {
   try {
     let userId = req.params.id;
+
+    if (!canAccess(req, userId)) {
+      return res.status(403).json({
+        success: false,
+        message: "You are not allowed to delete this user.",
+      });
+    }
+
     let result = await UsersModel.deleteOne({ _id: userId });
     console.log(result);
 
     if (result.deletedCount > 0) {
       res.json({
         success: true,
-        message: "Users deleted successfully.",
+        message: "User deleted successfully.",
         data: result,
       });
     } else {
-      res.json({
+      res.status(404).json({
         success: false,
-        message: "Users deleted. Are you sure it exsits?",
+        message: "User not found.",
       });
     }
   } catch (error) {
