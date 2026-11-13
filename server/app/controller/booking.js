@@ -30,6 +30,38 @@ module.exports.getList = async function (req, res, next) {
   }
 };
 
+//public availability (no token needed)
+//shows when each cat is busy, but never who booked it
+module.exports.getPublicAvailability = async function (req, res, next) {
+  try {
+    //only bookings that are still active and not over yet
+    let filter = {
+      status: { $ne: "cancelled" },
+      endDate: { $gt: new Date() },
+    };
+
+    //optional: /api/bookings/public?catName=Mochi
+    if (typeof req.query.catName === "string" && req.query.catName.trim() !== "") {
+      filter.catName = req.query.catName.trim();
+    }
+
+    //return only these four fields, so no user data leaves the server
+    let list = await BookingModel.find(filter)
+      .select({ catName: 1, startDate: 1, endDate: 1, status: 1, _id: 0 })
+      .sort({ startDate: 1 })
+      .lean();
+
+    res.json({
+      success: true,
+      message: "Public availability retrieved successfully.",
+      data: list,
+    });
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
+
 //get booking by ID
 module.exports.getByID = async function (req, res, next) {
   try {

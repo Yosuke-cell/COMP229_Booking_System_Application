@@ -4,7 +4,11 @@ var router = express.Router();
 var BookingController = require("../controller/booking");
 var authController = require("../controller/auth");
 
-// All booking routes require a valid token
+// Public route (no token): when each cat is busy.
+// It must stay above "/:id", otherwise Express would treat "public" as an id.
+router.get("/public", BookingController.getPublicAvailability);
+
+// All other booking routes require a valid token
 router.get("/", authController.logtoken, authController.validateToken, BookingController.getList);
 router.get("/:id", authController.validateToken, BookingController.getByID);
 
