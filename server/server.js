@@ -1,3 +1,10 @@
+/**
+ * Cat Booking System
+ * Group Member: Yosuke Nakamura, Tolga Unal, Yuhan Su, GYUBIN MUN, Juan Rojas Calvimontes
+ * This file imports and configure MongoDB connection, imports express application, set up listenning ports, handle ports errors, and initialize the backend.
+ */
+
+
 let configDB = require('./config/db');
 let app = require('./config/express');
 var http = require('http');
