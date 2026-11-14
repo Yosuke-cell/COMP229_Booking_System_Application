@@ -3,6 +3,20 @@
 Backend REST API for a cat booking system (Node.js, Express, MongoDB, JWT).
 Cat lovers can sign up, sign in, and book time to spend with cats owned by their owners (create / view / update / cancel bookings).
 
+## Team
+
+| Name | Role |
+|---|---|
+| Gyubin Mun | Developer |
+| Yosuke Nakamura | Developer |
+| Juan Rojas | Developer |
+| Yuhan Su | Developer |
+| Tolga Unal | Project Manager & Back-End Developer |
+
+## Live Application
+
+See the [live URL](https://comp229-booking-system-application.onrender.com/) 
+
 ## Setup
 
 ```
@@ -35,6 +49,7 @@ npm start
 | POST | /api/bookings | Yes | Create booking |
 | PUT | /api/bookings/:id | Owner/Admin | Update booking |
 | DELETE | /api/bookings/:id | Owner/Admin | Cancel booking (soft delete) |
+| GET | /api/bookings/public | No | View public availability |
 
 Protected routes need the header: `Authorization: Bearer <token>`
 
