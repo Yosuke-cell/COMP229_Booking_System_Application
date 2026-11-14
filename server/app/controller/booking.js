@@ -1,3 +1,11 @@
+/**
+ * Cat Booking System
+ * Group Member: Yosuke Nakamura, Tolga Unal, Yuhan Su, GYUBIN MUN, Juan Rojas Calvimontes
+ * This file imports the bookingsModel and defines functions for CRUD actions from the bookingRouter. 
+ */
+
+
+
 let BookingModel = require("../model/booking");
 
 //filter for avoiding duplication booking

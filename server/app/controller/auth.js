@@ -1,3 +1,11 @@
+/**
+ * Cat Booking System
+ * Group Member: Yosuke Nakamura, Tolga Unal, Yuhan Su, GYUBIN MUN, Juan Rojas Calvimontes
+ * This file defines signin and authentication functions for CRUD to be imported by other routers.
+ */
+
+
+
 let User = require('../model/user');
 let jwt = require('jsonwebtoken');
 let { expressjwt } = require('express-jwt');

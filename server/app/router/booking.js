@@ -1,3 +1,10 @@
+/**
+ * Cat Booking System
+ * Group Member: Yosuke Nakamura, Tolga Unal, Yuhan Su, GYUBIN MUN, Juan Rojas Calvimontes
+ * This file set up routers for /api/bookings, with CRUD and authentication functions implemented.
+ */
+
+
 var express = require("express");
 var router = express.Router();
 

@@ -1,3 +1,11 @@
+/**
+ * Cat Booking System
+ * Group Member: Yosuke Nakamura, Tolga Unal, Yuhan Su, GYUBIN MUN, Juan Rojas Calvimontes
+ * This file set up a mongoose schema that determines the fields for database storage related to /api/bookings.
+ */
+
+
+
 let mongoose = require("mongoose");
 
 let BookingModel = mongoose.Schema(
