@@ -1,3 +1,11 @@
+/**
+ * Cat Booking System
+ * Group Member: Yosuke Nakamura, Tolga Unal, Yuhan Su, GYUBIN MUN, Juan Rojas Calvimontes
+ * This file creates an express application by importing and configuring express and middlewares, importing and registering routers.
+ */
+
+
+
 const express = require("express");
 var createError = require("http-errors");
 var logger = require("morgan");

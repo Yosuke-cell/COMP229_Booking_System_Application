@@ -1,3 +1,10 @@
+/**
+ * Cat Booking System
+ * Group Member: Yosuke Nakamura, Tolga Unal, Yuhan Su, GYUBIN MUN, Juan Rojas Calvimontes
+ * This file serves as a function to connect to MongoDB, provided by the connection strings in the .env file.
+ */
+
+
 let mongoose = require('mongoose');
 require('dotenv').config()
 

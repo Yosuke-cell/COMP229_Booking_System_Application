@@ -1,3 +1,12 @@
+/**
+ * Cat Booking System
+ * Group Member: Yosuke Nakamura, Tolga Unal, Yuhan Su, GYUBIN MUN, Juan Rojas Calvimontes
+ * This file imports the usersModel and defines functions for CRUD actions from the userRouter. 
+ */
+
+
+
+
 let UsersModel = require("../model/user");
 
 // Returns true if the logged-in user is the owner of this account or an admin
