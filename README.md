@@ -7,10 +7,10 @@ Cat lovers can sign up, sign in, and book time to spend with cats owned by their
 
 | Name | Role |
 |---|---|
-| Gyubin Mun | Developer |
-| Yosuke Nakamura | Developer |
+| Gyubin Mun | Front-End Developer |
+| Yosuke Nakamura | Back-End Developer |
 | Juan Rojas | Developer |
-| Yuhan Su | Developer |
+| Yuhan Su | Software Tester |
 | Tolga Unal | Project Manager & Back-End Developer |
 
 ## Live Application
