@@ -43,3 +43,4 @@ Protected routes need the header: `Authorization: Bearer <token>`
 - End date must be after start date (400)
 - The same cat cannot be booked twice for overlapping times (409)
 - Only admins can change a booking's status (`pending` / `confirmed` / `cancelled`)
+#asdf
